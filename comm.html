@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Communication — Portfolio Célia Houbre</title>
+  <meta name="description" content="Projets de communication de Célia Houbre : newsletters, communiqués de presse, fake news magazine.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ---- Styles spécifiques page Comm ---- */
+
+    /* Hero couleur jaune */
+    .page-hero { background: linear-gradient(160deg, white 60%, rgba(249,178,51,0.08)); }
+    .comm-accent { color: var(--jaune); }
+
+    /* Grille PDF communiqués */
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* Bloc fake news avec viewer PDF */
+    .fakenews-block {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .fakenews-header {
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .fakenews-header .eyebrow {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--violet);
+      display: block; margin-bottom: 10px;
+    }
+    .fakenews-header h3 { margin-bottom: 8px; }
+    .fakenews-header p { color: var(--texte-soft); font-size: 0.9rem; }
+
+    .pdf-viewer-container {
+      position: relative;
+      background: #f8f5fe;
+    }
+
+    /* Frame PDF responsive */
+    .pdf-frame-wrapper {
+      width: 100%;
+      padding-bottom: 133%; /* ratio portrait A4 */
+      position: relative;
+      background: #eee;
+    }
+    .pdf-frame-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .pdf-viewer-footer {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      background: white;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .pdf-viewer-footer p { font-size: 0.85rem; color: var(--texte-soft); flex: 1; }
+
+    /* Slider spécial newsletter – images full */
+    .nl-slider {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .nl-slider .slider-track .slide img {
+      width: 100%;
+      max-height: 700px;
+      object-fit: contain;
+      background: #faf8fe;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo" role="button" tabindex="0">Célia<span>.</span></div>
+  <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="comm.html" class="active">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO PAGE -->
+<div class="page-hero" role="banner">
+  <!-- Plantes décoratives -->
+  <img src="assets/svg/plante1.svg" class="page-hero-decor page-hero-decor-l" alt="" aria-hidden="true">
+  <img src="assets/svg/tulipe.svg"  class="page-hero-decor page-hero-decor-r" alt="" aria-hidden="true">
+
+  <div class="page-hero-inner">
+    <span class="section-eyebrow">Projets</span>
+    <h1 class="comm-accent">Communication</h1>
+    <p>
+      Newsletters, communiqués de presse, articles, fake news…
+      Mes travaux de communication réalisés lors de mes études et en stage.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION PRINCIPALE – COMMUNICATION
+     ============================================================ -->
+<main class="projects-section">
+  <div class="section-inner">
+
+    <!-- ==================================================
+         1. NEWSLETTER
+         Slider présentant les 3 éditions de la newsletter
+         ================================================== -->
+    <div class="category-block fade-up" id="newsletter">
+      <div class="category-title">
+        <div class="category-icon">📰</div>
+        <div>
+          <h2>Newsletter</h2>
+          <span class="cat-count">3 éditions</span>
+        </div>
+      </div>
+
+      <!-- Contexte du projet -->
+      <div class="intro-block">
+        <p>
+          Dans le cadre d'un projet universitaire, nous étions amenés à réaliser entièrement
+          une émission en direct, y compris la communication de celle-ci.
+          J'ai pris en charge la <strong>création, la gestion, et l'animation</strong> de la
+          Newsletter de l'émission <em>CtrlS</em>, dont voici les visuels des 3 éditions :
+        </p>
+      </div>
+
+      <!-- Slider newsletter -->
+      <div class="nl-slider newsletter-slider" aria-label="Éditions de la newsletter CtrlS">
+        <div class="slider-track">
+          <div class="slide">
+            <img src="assets/img/newsletter1.jpg" alt="Newsletter CtrlS – Édition 1" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/newsletter2.jpg" alt="Newsletter CtrlS – Édition 2" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/newsletter3.jpg" alt="Newsletter CtrlS – Édition 3" loading="lazy">
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn prev" aria-label="Édition précédente">&#8592;</button>
+          <div class="slider-dots">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+          </div>
+          <button class="slider-btn next" aria-label="Édition suivante">&#8594;</button>
+        </div>
+      </div>
+    </div><!-- /newsletter -->
+
+    <!-- Séparateur décoratif -->
+    <div style="height:48px; display:flex; align-items:center; justify-content:center; margin: 8px 0">
+      <img src="assets/svg/fleur.svg" style="width:48px; opacity:0.35" alt="" aria-hidden="true">
+    </div>
+
+    <!-- ==================================================
+         2. COMMUNIQUÉS DE PRESSE
+         Cartes PDF avec visualisation et téléchargement
+         ================================================== -->
+    <div class="category-block fade-up" id="communiques">
+      <div class="category-title">
+        <div class="category-icon">📋</div>
+        <div>
+          <h2>Communiqués de presse</h2>
+          <span class="cat-count">3 documents</span>
+        </div>
+      </div>
+
+      <div class="intro-block">
+        <p>
+          Durant mon BUT MMI, j'ai été amenée à rédiger plusieurs communiqués de presse,
+          dans des contextes variés : <strong>lancement de projets</strong> (réels ou fictifs)
+          et <strong>gestion de situations de crise</strong> simulées.
+          Vous trouverez ici ceux réalisés pour <em>CtrlS</em>, une émission étudiante,
+          ainsi que pour <em>Fantastika</em>, un festival fictif conçu dans le cadre
+          d'une stratégie de communication à 360°.
+        </p>
+      </div>
+
+      <div class="pdf-grid">
+        <!-- Communiqué CtrlS -->
+        <div class="pdf-card fade-up">
+          <div class="pdf-icon">📄</div>
+          <div class="pdf-info">
+            <h3>Communiqué — CtrlS</h3>
+            <p>Lancement de l'émission étudiante CtrlS. Projet universitaire BUT MMI.</p>
+            <div class="pdf-actions">
+              <a href="assets/pdf/communique_ctrl_s.pdf" target="_blank" class="btn-sm btn-sm-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Ouvrir
+              </a>
+              <a href="assets/pdf/communique_ctrl_s.pdf" download class="btn-sm btn-sm-secondary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+                Télécharger
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Communiqué Fantastika -->
+        <div class="pdf-card fade-up">
+          <div class="pdf-icon">📄</div>
+          <div class="pdf-info">
+            <h3>Communiqué — Fantastika</h3>
+            <p>Festival fictif créé dans le cadre d'une stratégie de communication à 360°.</p>
+            <div class="pdf-actions">
+              <a href="assets/pdf/communique_1.pdf" target="_blank" class="btn-sm btn-sm-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Ouvrir
+              </a>
+              <a href="assets/pdf/communique_1.pdf" download class="btn-sm btn-sm-secondary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+                Télécharger
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Communiqué Situation de crise -->
+        <div class="pdf-card fade-up">
+          <div class="pdf-icon">🚨</div>
+          <div class="pdf-info">
+            <h3>Communiqué — Situation de crise</h3>
+            <p>Gestion de situation de crise simulée. Exercice de communication d'urgence.</p>
+            <div class="pdf-actions">
+              <!-- Ce fichier est une image JPG -->
+              <a href="assets/img/communique_crise.jpg" target="_blank" class="btn-sm btn-sm-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Voir
+              </a>
+              <a href="assets/img/communique_crise.jpg" download class="btn-sm btn-sm-secondary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+                Télécharger
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aperçu image communiqué de crise -->
+      <div style="margin-top:24px; background:white; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);" class="fade-up">
+        <img src="assets/img/communique_ctrl_s.jpg" alt="Communiqué Ctrl s" style="width:100%; max-height:480px; object-fit:contain; object-position:top; background:#f8f5fe; display:block;" loading="lazy" data-lightbox="assets/img/communique_ctrl_s.jpg">
+        <p style="padding:12px 16px; font-size:0.8rem; color:var(--texte-soft); background:white; border-top:1px solid var(--border);">
+          Communiqué de presse – Ctrl S <span style="opacity:0.5">· Cliquer pour agrandir</span>
+        </p>
+      </div>
+    </div><!-- /communiques -->
+
+    <!-- Séparateur -->
+    <div style="height:48px; display:flex; align-items:center; justify-content:center; margin:8px 0">
+      <img src="assets/svg/tulipe.svg" style="width:40px; opacity:0.3" alt="" aria-hidden="true">
+    </div>
+
+    <!-- ==================================================
+         1. Strat
+         Slider présentant les 3 éditions de la newsletter
+         ================================================== -->
+    <div class="category-block fade-up" id="newsletter">
+      <div class="category-title">
+        <div class="category-icon">📰</div>
+        <div>
+          <h2>Stratégie de Communication</h2>
+          <span class="cat-count">1 Stratégie</span>
+        </div>
+      </div>
+
+      <!-- Contexte du projet -->
+      <div class="intro-block">
+        <p>
+          Lors d'un exercice de <strong>stratégie de communication</strong>, j'ai été amenée 
+          à imaginer une proposition destinée à convaincre un potentiel sponsor — 
+          ici <em><strong>Uber Eats</strong></em> — de financer notre projet de <strong>tour du monde culinaire à Mulhouse</strong>.
+          J'ai ainsi conçu une présentation complète mettant en avant la solidité du projet, 
+          les différentes stratégies prévues pour attirer le public à l'événement, ainsi que 
+          les bénéfices que le sponsor pourrait tirer de ce partenariat. <strong>Découvrez les différentes 
+          approches imaginées… la dernière pourrait bien vous surprendre !</strong>
+        </p>
+      </div>
+
+      <!-- Slider Strat -->
+      <div class="nl-slider newsletter-slider" aria-label="Éditions de la newsletter CtrlS">
+        <div class="slider-track">
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 1.jpg" alt="Roue des saveurs 1" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 2.jpg" alt="Roue des saveurs 2" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 3.jpg" alt="Roue des saveurs 3" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 4.jpg" alt="Roue des saveurs 4" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 5.jpg" alt="Roue des saveurs 5" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 6.jpg" alt="Roue des saveurs 6" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 7.jpg" alt="Roue des saveurs 7" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 8.jpg" alt="Roue des saveurs 8" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 9.jpg" alt="Roue des saveurs 9" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 10.jpg" alt="Roue des saveurs 10" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 11.jpg" alt="Roue des saveurs 11" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 12.jpg" alt="Roue des saveurs 12" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/La Roue Des Saveurs/Roue des saveurs 13.jpg" alt="Roue des saveurs 13" loading="lazy">
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn prev" aria-label="Édition précédente">&#8592;</button>
+          <div class="slider-dots">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+          </div>
+          <button class="slider-btn next" aria-label="Édition suivante">&#8594;</button>
+        </div>
+      </div>
+    </div><!-- /Strat -->
+
+    <!-- Séparateur décoratif -->
+    <div style="height:48px; display:flex; align-items:center; justify-content:center; margin: 8px 0">
+      <img src="assets/svg/fleur.svg" style="width:48px; opacity:0.35" alt="" aria-hidden="true">
+    </div>
+
+    <!-- ==================================================
+         3. BLOG
+         Slider présentant les 3 éditions de la newsletter
+         ================================================== -->
+    <div class="category-block fade-up" id="newsletter">
+      <div class="category-title">
+        <div class="category-icon">📃</div>
+        <div>
+          <h2>Blog</h2>
+          <span class="cat-count">1 article</span>
+        </div>
+      </div>
+
+      <!-- Contexte du projet -->
+      <div class="intro-block">
+        <p>
+          Dans le cadre d'un projet d'écriture multimédia, j'ai conçu et rédigé un article destiné à être publié 
+          sur un blog WordPress. L'objectif : créer un contenu engageant autour d'un format<strong> “Top 5”</strong>, avec une totale 
+          liberté sur le choix du sujet. Passionné par la nature et la biodiversité, <strong>j'ai choisi de mettre en lumière 
+          les plus petits oiseaux de nos forêts</strong> à travers un article à la fois informatif, accessible et immersif.
+        </p>
+      </div>
+
+      <!-- Slider newsletter -->
+      <div class="nl-slider newsletter-slider" aria-label="Éditions de la newsletter CtrlS">
+        <div class="slider-track">
+          <div class="slide">
+            <img src="assets/img/Blog (1).png" alt="Blog 1" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/Blog (2).png" alt="Blog 2" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/Blog (3).png" alt="Blog 3" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/Blog (4).png" alt="Blog 4" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/Blog (5).png" alt="Blog 5" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/Blog (6).png" alt="Blog 6" loading="lazy">
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn prev" aria-label="Édition précédente">&#8592;</button>
+          <div class="slider-dots">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+          </div>
+          <button class="slider-btn next" aria-label="Édition suivante">&#8594;</button>
+        </div>
+      </div>
+    </div><!-- /Blog -->
+
+    <!-- Séparateur décoratif -->
+    <div style="height:48px; display:flex; align-items:center; justify-content:center; margin: 8px 0">
+      <img src="assets/svg/fleur.svg" style="width:48px; opacity:0.35" alt="" aria-hidden="true">
+    </div>
+
+
+    
+
+
+    <!-- ==================================================
+         3. FAKE NEWS MAGAZINE
+         Viewer PDF avec contexte du projet
+         ================================================== -->
+    <div class="category-block fade-up" id="fakenews">
+      <div class="category-title">
+        <div class="category-icon">🚩</div>
+        <div>
+          <h2>Fake News Magazine</h2>
+          <span class="cat-count">Projet culture numérique</span>
+        </div>
+      </div>
+
+      <div class="fakenews-block">
+        <div class="fakenews-header">
+          <span class="eyebrow">Culture Numérique · Binôme</span>
+          <h3>Et si les mammouths revenaient ?</h3>
+          <p>
+            Pour ce projet de culture numérique en binôme, nous avons imaginé une
+            <strong>fake news destinée aux 8–12 ans</strong> sous forme de magazine, avec une
+            double page d'information suivie d'un décryptage pédagogique.
+            L'objectif : <em>apprendre à repérer les fausses informations et développer l'esprit critique des jeunes lecteurs.</em>
+          </p>
+        </div>
+
+        <!-- Viewer PDF inline -->
+        <div class="pdf-viewer-container">
+          <div class="pdf-frame-wrapper">
+            <iframe
+              src="assets/pdf/fakenews_culture_numerique.pdf"
+              title="Fake News Magazine – Et si les mammouths revenaient ?"
+              loading="lazy"
+              aria-label="Magazine fake news à feuilleter">
+            </iframe>
+          </div>
+        </div>
+
+        <div class="pdf-viewer-footer">
+          <p>📖 Magazine — Fake News &amp; Décryptage pédagogique</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="assets/pdf/fakenews_culture_numerique.pdf" target="_blank" class="btn-sm btn-sm-primary">
+              Ouvrir en plein écran
+            </a>
+            <a href="assets/pdf/fakenews_culture_numerique.pdf" download class="btn-sm btn-sm-secondary">
+              Télécharger
+            </a>
+          </div>
+        </div>
+      </div>
+    </div><!-- /fakenews -->
+
+  </div><!-- /section-inner -->
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Zoom image">
+  <div class="lightbox-inner">
+    <img src="" alt="">
+    <button class="lightbox-close" aria-label="Fermer">✕</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Célia<span>.</span></div>
+  <div class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html">Contact</a>
+    <a href="assets/pdf/CV_Celia_Houbre.pdf" target="_blank">Mon CV</a>
+  </div>
+  <p>© 2026 Célia Houbre · Tous droits réservés</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

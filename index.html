@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Célia Houbre — Portfolio MMI</title>
+  <meta name="description" content="Portfolio de Célia Houbre, étudiante en BUT MMI – Communication, Graphisme & Photographie.">
+
+  <!-- Google Fonts : Playfair Display (élégant) + DM Sans (lisible) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Styles spécifiques page d'accueil -->
+  <style>
+    /* Fond animé décoratif (cercles doux) */
+    .home-bg {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      overflow: hidden;
+    }
+    .home-bg::before {
+      content: '';
+      position: absolute;
+      top: -20%; left: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(169,138,191,0.09) 0%, transparent 65%);
+      border-radius: 50%;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    .home-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -10%; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(174,207,236,0.12) 0%, transparent 65%);
+      border-radius: 50%;
+      animation: drift 22s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    /* Bannière hero full-width decorée */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Plante hero décor */
+    .hero-plant-right {
+      position: absolute;
+      right: -20px; top: 80px;
+      width: 220px; opacity: 0.3;
+      pointer-events: none;
+    }
+    .hero-plant-left {
+      position: absolute;
+      left: -20px; bottom: 60px;
+      width: 140px; opacity: 0.22;
+      pointer-events: none;
+      transform: scaleX(-1);
+    }
+
+    /* Section compétences */
+    .skills-section { background: white; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .skill-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--jaune-pale);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;         /* coupe l'image en cercle */
+  border: 4px solid white;
+  box-shadow: 0 4px 20px rgba(169,138,191,0.3);
+  margin: 0 auto 16px;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* recadre sans déformer */
+  object-position: center top; /* cadre sur le visage */
+  display: block;
+}
+    .skill-pill .icon { font-size: 1.3rem; }
+
+    @media (max-width: 768px) {
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Fond animé -->
+<div class="home-bg"></div>
+
+<!-- ======================================================
+     HEADER
+     Navigation principale fixe avec logo et liens de page
+     ====================================================== -->
+<header>
+  <div class="logo" role="button" tabindex="0" aria-label="Retour accueil">
+    Célia<span>.</span>
+  </div>
+
+  <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav aria-label="Navigation principale">
+    <a href="index.html" class="active">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </nav>
+</header>
+
+<!-- ======================================================
+     HERO
+     Section d'accueil avec présentation et carte profil
+     ====================================================== -->
+<section class="hero-section" aria-label="Présentation">
+  <!-- Plantes décoratives -->
+  <img src="assets/svg/plante2.svg" class="hero-plant-right" alt="" aria-hidden="true">
+  <img src="assets/svg/tulipe.svg"  class="hero-plant-left"  alt="" aria-hidden="true">
+
+  <div class="hero" style="width:100%">
+    <!-- Texte gauche -->
+    <div class="hero-text fade-up">
+      <div class="hero-badge">En recherche d'alternance · Master Communication</div>
+
+      <h1>Bonjour, je suis <span class="accent">Célia</span> !</h1>
+      <p class="hero-subtitle">Étudiante BUT MMI · Chargée de com' en devenir</p>
+
+      <p>
+        Actuellement en 3ème année de BUT MMI, je prévois de poursuivre vers un Master
+        pour devenir chargée de communication — idéalement en alternance.
+        Créativité, sens de la communication et passion pour le visuel sont mes moteurs !
+      </p>
+
+      <div class="hero-actions">
+        <a href="assets/pdf/CV_Celia_Houbre.pdf" target="_blank" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+          Mon CV
+        </a>
+        <a href="#apercu" class="btn btn-secondary">Voir mes projets</a>
+      </div>
+    </div>
+
+    <!-- Carte profil droite -->
+    <div class="hero-visual fade-up" style="transition-delay:0.15s">
+      <div class="profile-card">
+        <div class="profile-avatar">
+          <img src="assets/img/celia2.jpg" alt="Photo de Célia Houbre">
+        </div>
+        <h3>Célia Houbre</h3>
+        <p class="role">BUT MMI · 3ème année</p>
+        <div class="profile-tags">
+          <span class="tag tag-violet">Communication</span>
+          <span class="tag tag-jaune">Graphisme</span>
+          <span class="tag tag-bleu">Photographie</span>
+          <span class="tag">Lightroom</span>
+          <span class="tag">InDesign</span>
+          <span class="tag">Canva</span>
+        </div>
+        <div class="stat-row">
+          <div class="stat-item">
+            <span class="num" data-counter data-target="3" data-suffix="">3</span>
+            <span class="label">Stages</span>
+          </div>
+          <div class="stat-item">
+            <span class="num" data-counter data-target="3">3</span>
+            <span class="label">Domaines</span>
+          </div>
+          <div class="stat-item">
+            <span class="num" data-counter data-target="3">3</span>
+            <span class="label">Ans BUT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     PRÉSENTATION COMPLÈTE
+     Texte de présentation détaillé
+     ====================================================== -->
+<section class="experiences" aria-labelledby="presentation-title">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">À propos</span>
+      <h2 id="presentation-title">Mon parcours</h2>
+      <div class="section-divider"><span class="dot"></span></div>
+    </div>
+
+    <div style="max-width:760px; margin:0 auto; text-align:center" class="fade-up">
+      <p style="font-size:1.05rem; color:var(--texte-soft); margin-bottom:24px">
+        Hello ! Moi c'est Célia, je suis actuellement en 3ème année de BUT MMI
+        (Métiers du Multimédia et de l'Internet), et je prévois de poursuivre vers un Master
+        l'année prochaine pour devenir chargée de communication.
+        Si possible, j'aimerais poursuivre mes études en alternance, c'est pour cela que
+        je suis en recherche active.
+      </p>
+      <p style="font-size:1.05rem; color:var(--texte-soft); margin-bottom:36px">
+        N'hésitez pas à me contacter si mon profil vous intéresse ou si vous avez une
+        opportunité à me proposer ! Vous trouverez sur ce site un ensemble de divers projets
+        que j'ai pu effectuer autant durant mes années d'études, que pendant des stages,
+        ou bien lors de mon temps libre. Bonne visite !
+      </p>
+      <a href="contact.html" class="btn btn-primary">Me contacter</a>
+    </div>
+
+    <!-- Expériences -->
+    <h3 style="text-align:center; margin:60px 0 28px; font-size:1.3rem;">Mes expériences</h3>
+    <div class="exp-grid">
+      <div class="exp-card fade-up">
+        <span class="period">Stage · 2026</span>
+        <h3>Sandro Matera</h3>
+        <p class="company">📍 Fontenais, Suisse</p>
+        <p>Photographie culinaire pour le restaurant « L'Imprimerie ». Réalisations graphiques pour divers clients et sur divers supports.</p>
+      </div>
+      <div class="exp-card fade-up">
+        <span class="period">Stage · 2025</span>
+        <h3>Écomusée d'Alsace</h3>
+        <p class="company">📍 Ungersheim</p>
+        <p>Photographie du musée et de ses activités pédagogiques pour la promotion et les réseaux sociaux. Création de contenu visuel pour illustrer les publications.</p>
+      </div>
+      <div class="exp-card fade-up">
+        <span class="period">Stage · 2025</span>
+        <h3>Communauté de Communes du Ried de Marckolsheim</h3>
+        <p class="company">📍 Marckolsheim</p>
+        <p>Création d'une banque d'images (bâtiments, zones d'activités, ...) et mise en valeur de la biodiversité et des espaces verts des communes.</p>
+      </div>
+    </div>
+
+    <!-- Compétences -->
+    <h3 style="text-align:center; margin:60px 0 28px; font-size:1.3rem;">Compétences & outils</h3>
+    <div class="skills-grid">
+      <div class="skill-pill fade-up"><span class="icon">💻</span> Suite Adobe</div>
+      <div class="skill-pill fade-up"><span class="icon">🎨</span> Adobe InDesign</div>
+      <div class="skill-pill fade-up"><span class="icon">✨</span> Lightroom</div>
+      <div class="skill-pill fade-up"><span class="icon">📷</span> Photographie</div>
+      <div class="skill-pill fade-up"><span class="icon">🎯</span> Stratégie de com.</div>
+      <div class="skill-pill fade-up"><span class="icon">✏️</span> Canva</div>
+      <div class="skill-pill fade-up"><span class="icon">📰</span> Rédaction web</div>
+      <div class="skill-pill fade-up"><span class="icon">📱</span> Réseaux sociaux</div>
+      <div class="skill-pill fade-up"><span class="icon">📄</span> Relations presse</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     APERÇU PROJETS
+     Cards cliquables menant vers chaque page catégorie
+     ====================================================== -->
+<section class="projets-apercu" id="apercu" aria-labelledby="apercu-title">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Portfolio</span>
+      <h2 id="apercu-title">Mes projets</h2>
+      <p>Un aperçu de mes travaux en communication, graphisme et photographie.</p>
+      <div class="section-divider"><span class="dot"></span></div>
+    </div>
+
+    <div class="apercu-grid">
+      <!-- Communication -->
+      <a href="comm.html" class="apercu-cat fade-up" aria-label="Voir les projets communication">
+        <div class="apercu-cat-header comm-bg">📣</div>
+        <div class="apercu-cat-body">
+          <h3>Communication</h3>
+          <p class="desc">Newsletters, communiqués de presse, articles de blog, fake news…</p>
+          <div class="apercu-mini-list">
+            <div class="apercu-mini-item">Newsletter CtrlS (3 éditions)</div>
+            <div class="apercu-mini-item">Communiqués de presse</div>
+            <div class="apercu-mini-item">Fake News Magazine</div>
+          </div>
+          <span class="apercu-link">
+            Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Graphisme -->
+      <a href="graphisme.html" class="apercu-cat fade-up" aria-label="Voir les projets graphisme">
+        <div class="apercu-cat-header graphisme-bg">🎨</div>
+        <div class="apercu-cat-body">
+          <h3>Graphisme</h3>
+          <p class="desc">Flyers, affiches, logos, moodboards et identités visuelles.</p>
+          <div class="apercu-mini-list">
+            <div class="apercu-mini-item">Affiches</div>
+            <div class="apercu-mini-item">Flyer</div>
+            <div class="apercu-mini-item">Logos & identité visuelle</div>
+          </div>
+          <span class="apercu-link">
+            Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Photo -->
+      <a href="photo.html" class="apercu-cat fade-up" aria-label="Voir les projets photo">
+        <div class="apercu-cat-header photo-bg">📷</div>
+        <div class="apercu-cat-body">
+          <h3>Photographie</h3>
+          <p class="desc">Animalier, portrait, architecture, tourisme, nature et culinaire.</p>
+          <div class="apercu-mini-list">
+            <div class="apercu-mini-item">Faune & nature sauvage</div>
+            <div class="apercu-mini-item">Écomusée d'Alsace</div>
+            <div class="apercu-mini-item">Photographie culinaire</div>
+          </div>
+          <span class="apercu-link">
+            Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<footer>
+  <div class="footer-logo">Célia<span>.</span></div>
+  <div class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html">Contact</a>
+    <a href="assets/pdf/CV_Celia_Houbre.pdf" target="_blank">Mon CV</a>
+  </div>
+  <p>© 2026 Célia Houbre · Tous droits réservés</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

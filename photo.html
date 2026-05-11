@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photographie — Portfolio Célia Houbre</title>
+  <meta name="description" content="Galerie photographique de Célia Houbre : animalier, bâtiments, Écomusée, nature, culinaire.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ---- Styles spécifiques page Photo ---- */
+
+    /* Hero bleu doux */
+    .page-hero {
+      background: linear-gradient(160deg, white 55%, rgba(174,207,236,0.1));
+    }
+    .photo-accent { color: var(--bleu); filter: brightness(0.7); }
+
+    /* Chaque style photographique est une section indépendante */
+    .photo-section-wrapper {
+      background: var(--jaune-pale);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Alternance de fond pour aérer */
+    .photo-section-wrapper:nth-child(even) {
+      background: white;
+    }
+
+    .photo-section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+
+    /* Titre du style photo */
+    .photo-style-title {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .photo-style-emoji {
+      font-size: 2.8rem;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .photo-style-title h2 {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    .photo-style-title .context {
+      display: inline-block;
+      background: rgba(174,207,236,0.25);
+      color: #4a7fa5;
+      padding: 2px 12px;
+      border-radius: var(--radius-xl);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Texte descriptif style photo */
+    .photo-desc {
+      background: rgba(174,207,236,0.1);
+      border-left: 3px solid var(--bleu);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      color: var(--texte-soft);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .photo-desc a {
+      color: var(--violet);
+      text-decoration: underline;
+    }
+    .photo-desc strong { color: var(--texte); }
+
+    /* Grille de photos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 10px;
+    }
+
+    /* Placeholder photo (à remplacer par de vraies photos) */
+    .photo-item {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .photo-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+    .photo-item:hover .photo-item-overlay { opacity: 1; }
+
+    .photo-item-thumb {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, rgba(174,207,236,0.25), rgba(169,138,191,0.15));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      gap: 6px;
+      border: 1px solid rgba(174,207,236,0.3);
+    }
+
+    /* Variantes de fond par style */
+    .bg-animalier { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+    .bg-batiments { background: linear-gradient(135deg, rgba(174,207,236,0.3), rgba(174,207,236,0.1)); }
+    .bg-ecomusee  { background: linear-gradient(135deg, #e8f5e9, rgba(174,207,236,0.2)); }
+    .bg-nature    { background: linear-gradient(135deg, #f0f4e0, #dce8c0); }
+    .bg-culinaire { background: linear-gradient(135deg, rgba(249,178,51,0.2), rgba(249,178,51,0.06)); }
+
+    .photo-item-thumb small {
+      font-size: 0.68rem;
+      color: var(--texte-soft);
+      text-align: center;
+      padding: 0 8px;
+      font-family: var(--font-body);
+    }
+
+    .photo-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(169,138,191,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      backdrop-filter: blur(2px);
+    }
+    .photo-item-overlay span {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--violet);
+    }
+
+    /* Lien Flickr */
+    .flickr-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(174,207,236,0.2);
+      border: 1px solid var(--bleu);
+      color: #2a6fa8;
+      padding: 8px 18px;
+      border-radius: var(--radius-xl);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: all 0.2s ease;
+    }
+    .flickr-link:hover {
+      background: rgba(174,207,236,0.35);
+      transform: translateY(-2px);
+    }
+
+    /* Séparateur floral */
+    .floral-sep {
+      text-align: center;
+      padding: 24px 0 0;
+      opacity: 0.3;
+    }
+    .floral-sep img { width: 50px; margin: 0 auto; }
+
+    @media (max-width: 768px) {
+      .photo-section-inner { padding: 40px 20px; }
+      .photo-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .photo-style-title { grid-template-columns: 1fr; gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo" role="button" tabindex="0">Célia<span>.</span></div>
+  <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html" class="active">Photo</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO PAGE -->
+<div class="page-hero" role="banner">
+  <img src="assets/svg/plante1.svg" class="page-hero-decor page-hero-decor-l" alt="" aria-hidden="true">
+  <img src="assets/svg/tulipe.svg"  class="page-hero-decor page-hero-decor-r" alt="" aria-hidden="true">
+
+  <div class="page-hero-inner">
+    <span class="section-eyebrow">Galerie</span>
+    <h1 class="photo-accent">Photographie</h1>
+    <p>
+      Passionnée de photographie, je vous invite à découvrir mes clichés à travers
+      différents styles : animalier, culinaire, tourisme, architecture, nature et de véhicules.
+    </p>
+    <a href="https://www.flickr.com/photos/194704484@N08/" target="_blank" rel="noopener" class="flickr-link" style="margin-top:12px; display:inline-flex;">
+      📷 Découvrir mon Flickr
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+     INTRO GÉNÉRALE
+     ============================================================ -->
+<div style="background: var(--jaune-pale); padding:0 40px 40px; border-bottom:1px solid var(--border);">
+  <div style="max-width:800px; margin:0 auto; padding-top:40px;" class="fade-up">
+    <div class="photo-desc" style="border-left:3px solid var(--violet);">
+      <p>
+        Passionnée de photographie animalière, je sors régulièrement lors de mon temps libre
+        pour photographier les oiseaux et les petites bêtes autour de chez moi. J'aime
+        immortaliser les moments que la nature peut nous offrir. Cela m'a permis d'acquérir
+        diverses connaissances en termes de photographie mais également en traitement de photo,
+        notamment avec le logiciel <strong>Lightroom</strong>.
+      </p>
+      <p style="margin-top:10px">
+        Cette passion s'est émancipée grâce à diverses expériences professionnelles où j'ai pu
+        découvrir d'autres styles photographiques. Je vous invite à visiter mon profil Flickr
+        pour découvrir davantage de mes clichés !
+      </p>
+    </div>
+
+    <!-- Navigation interne vers les styles -->
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;">
+      <a href="#animalier" style="text-decoration:none;" class="btn btn-secondary" style="padding:6px 16px; font-size:0.8rem;">🐦 Animalier</a>
+      <a href="#culinaire" style="text-decoration:none;" class="btn btn-secondary" style="padding:6px 16px; font-size:0.8rem;">🍽️ Culinaire</a>
+      <a href="#ecomusee"  style="text-decoration:none;" class="btn btn-secondary" style="padding:6px 16px; font-size:0.8rem;">🌿 Écomusée</a>
+      <a href="#batiments" style="text-decoration:none;" class="btn btn-secondary" style="padding:6px 16px; font-size:0.8rem;">🏛️ Bâtiments</a>
+      <a href="#nature"    style="text-decoration:none;" class="btn btn-secondary" style="padding:6px 16px; font-size:0.8rem;">🌸 Nature</a>
+      <a href="#vehicule" style="text-decoration:none;" class="btn btn-secondary" style="padding:6px 16px; font-size:0.8rem;">🚗 Véhicules</a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     1. ANIMALIER
+     ============================================================ -->
+<section class="photo-section-wrapper" id="animalier">
+  <div class="photo-section-inner">
+    <div class="photo-style-title fade-up">
+      <div class="photo-style-emoji">🐦</div>
+      <div>
+        <h2>Animalier</h2>
+        <span class="context">Temps libre · Passion personnelle</span>
+      </div>
+    </div>
+
+    <div class="photo-desc fade-up">
+      Passionnée de photographie animalière, je capture régulièrement oiseaux et petites bêtes
+      de mon environnement. Ces sorties m'ont permis d'affiner ma technique et ma patience,
+      qualités essentielles pour saisir des moments fugaces dans la nature et qui peuvent être très bénéfiques pour des projets professionnels.
+      Traitement sous <strong>Lightroom</strong>.
+    </div>
+
+    <!-- Grille de placeholders — à remplacer par de vraies photos -->
+    <div class="photo-grid">
+      <!-- Placeholders. Pour ajouter vos photos: <div class="photo-item"><img src="assets/img/votre_photo.jpg" alt="Description" data-lightbox="assets/img/votre_photo.jpg"></div> -->
+       <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/BuseVariable.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/BuseVariable.jpg"></div></div>
+       <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/RatonLaveur1.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/RatonLaveur1.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/Chevreuil.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/Chevreuil.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/FuliguleDeBaer.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/FuliguleDeBaer.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/PythonVert.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/PythonVert.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/BalbuzardPêcheur.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/BalbuzardPêcheur.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/Chat.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/Chat.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/Chat2.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/Chat2.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/ChatDesSables.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/ChatDesSables.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/Crabe.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/Crabe.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/EcureilRoux.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/EcureilRoux.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/FuliguleMorillon.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/FuliguleMorillon.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/GrenouilleDeLessona.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/GrenouilleDeLessona.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/HéronCendré1.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/HéronCendré1.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/LapinDeGarenne.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/LapinDeGarenne.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/MartinPêcheur1.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/MartinPêcheur1.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/MartinPêcheur2.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/MartinPêcheur2.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/MésangeCharbonnière.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/MésangeCharbonnière.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/PandaRoux.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/PandaRoux.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/PetitGravelot.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/PetitGravelot.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/RatonLaveur2.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/RatonLaveur2.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/RougeGorge.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/RougeGorge.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/SicusFerrugineus.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/SicusFerrugineus.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/SyrpheCeinturé.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/SyrpheCeinturé.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/AnimauxInsecte/TroglodyteMignon.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/AnimauxInsecte/TroglodyteMignon.jpg"></div></div>
+    </div>
+
+    <div class="floral-sep"><img src="assets/svg/fleur.svg" alt=""></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     2. CULINAIRE
+     ============================================================ -->
+<section class="photo-section-wrapper" id="culinaire">
+  <div class="photo-section-inner">
+    <div class="photo-style-title fade-up">
+      <div class="photo-style-emoji">🍽️</div>
+      <div>
+        <h2>Culinaire</h2>
+        <span class="context">Stage · Sandro Matera · L'Imprimerie</span>
+      </div>
+    </div>
+
+    <div class="photo-desc fade-up">
+      Lors de mon stage chez <strong>Sandro Matera</strong>, j'ai eu la belle opportunité de
+      découvrir la <strong>photographie culinaire</strong> pour le restaurant
+      <em>« L'Imprimerie »</em> à Fontenais (Suisse). Une expérience qui m'a beaucoup plu,
+      et qui m'a permis de découvrir cette nouvelle facette de la photographie — lumière,
+      mise en scène des plats, composition visuelle…
+    </div>
+
+    <div class="photo-grid">
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (1).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (1).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (3).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (3).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (4).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (4).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (5).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (5).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (6).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (6).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (7).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (7).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (8).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (8).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (9).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (9).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (10).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (10).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (11).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (11).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (12).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (12).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (13).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (13).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (14).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (14).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Culinaire/Culinaire (15).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Culinaire/Culinaire (15).jpg"></div></div>
+    </div>
+
+
+    <div class="floral-sep"><img src="assets/svg/fleur.svg" alt=""></div>
+  </div>
+</section>
+
+
+
+<!-- ============================================================
+     3. ÉCOMUSÉE
+     ============================================================ -->
+<section class="photo-section-wrapper" id="ecomusee">
+  <div class="photo-section-inner">
+    <div class="photo-style-title fade-up">
+      <div class="photo-style-emoji">🌾</div>
+      <div>
+        <h2>Tourisme — Écomusée</h2>
+        <span class="context">Stage · Écomusée d'Alsace</span>
+      </div>
+    </div>
+
+    <div class="photo-desc fade-up">
+      J'ai eu l'opportunité de faire un stage à l'<strong>Écomusée d'Alsace</strong> lors
+      de l'été 2025. On m'a alors demandé de réaliser quelques photos du musée pour
+      le promouvoir, promouvoir les activités pédagogiques, mais également pour illustrer
+      leurs publications sur les réseaux sociaux. J'ai par la même occasion photographié
+      des cailloux décorés pour informer les amateurs de
+      <strong>#LoveOnTheRocks</strong> que de nouveaux cailloux avaient été cachés au sein du musée.
+    </div>
+
+    <div class="photo-grid">
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Barque©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Barque©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Cour_de_Rumersheim©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Cour_de_Rumersheim©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Hortensia02©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Hortensia02©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Hortensia©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Hortensia©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Maison_Gommersdorf©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Maison_Gommersdorf©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Maison_Theodor_Hueber©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Maison_Theodor_Hueber©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Rue_menuiserie©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Rue_menuiserie©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Scierie©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Scierie©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animations/Cheval02©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animations/Cheval02©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animations/Coiffe02©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animations/Coiffe02©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animations/Coiffe03©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animations/Coiffe03©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animations/Tracteur©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animations/Tracteur©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animations/Vache02©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animations/Vache02©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animations/Vache©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animations/Vache©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Centre pédagogique/Centre_pédagogique08©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Centre pédagogique/Centre_pédagogique08©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Centre pédagogique/Centre_pédagogique17©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Centre pédagogique/Centre_pédagogique17©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Centre pédagogique/Centre_pédagogique27©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Centre pédagogique/Centre_pédagogique27©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animaux/Chevre©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animaux/Chevre©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animaux/Dindon02©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animaux/Dindon02©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animaux/Mouton02©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animaux/Mouton02©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animaux/Mouton04©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animaux/Mouton04©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock02©CHoubre.jpg.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock02©CHoubre.jpg.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock03©CHoubre.jpg.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock03©CHoubre.jpg.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock04©CHoubre.jpg.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock04©CHoubre.jpg.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock05©CHoubre.jpg.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock05©CHoubre.jpg.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock06©CHoubre.jpg.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Love on the rocks/Love_on_the_Rock06©CHoubre.jpg.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Maison_ouvrier_Monswiller©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Maisons et musée en lui meme/Maison_ouvrier_Monswiller©CHoubre.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Écomusée/Musée/Animations/Coiffe©CHoubre.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/Écomusée/Musée/Animations/Coiffe©CHoubre.jpg"></div></div>
+
+    </div>
+
+    <div class="floral-sep"><img src="assets/svg/fleur.svg" alt=""></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. BÂTIMENTS
+     ============================================================ -->
+<section class="photo-section-wrapper" id="batiments">
+  <div class="photo-section-inner">
+    <div class="photo-style-title fade-up">
+      <div class="photo-style-emoji">🏛️</div>
+      <div>
+        <h2>Bâtiments & architecture</h2>
+        <span class="context">Stage · Communauté de Communes du Ried de Marckolsheim</span>
+      </div>
+    </div>
+
+    <div class="photo-desc fade-up">
+      Cet ensemble de photos ont été prises dans le cadre de mon stage au sein de la
+      <strong>Communauté de Communes du Ried de Marckolsheim</strong>, où j'ai été amenée
+      à constituer une banque d'images regroupant divers bâtiments et zones d'activités
+      des différentes communes. J'ai également été amenée à promouvoir la biodiversité
+      présente et les espaces verts.
+    </div>
+
+    <div class="photo-grid">
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Mairie/Mairie (2).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Mairie/Mairie (2).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (1).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (1).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (2).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (2).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (3).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (3).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (4).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (4).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (5).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (5).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (6).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (6).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (7).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (7).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (8).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (8).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (9).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (9).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (10).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (10).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Église/Eglise (11).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Église/Eglise (11).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/parc d'activités/ParcDActivités (1).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/parc d'activités/ParcDActivités (1).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/parc d'activités/ParcDActivités (3).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/parc d'activités/ParcDActivités (3).jpg"></div></div>
+      <div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/parc d'activités/ParcDActivités (2).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/parc d'activités/ParcDActivités (2).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Mairie/Mairie (1).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Mairie/Mairie (1).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Mairie/Mairie (3).jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Mairie/Mairie (3).jpg"></div></div>
+    </div>
+
+    <div class="floral-sep"><img src="assets/svg/tulipe.svg" alt=""></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. NATURE
+     ============================================================ -->
+<section class="photo-section-wrapper" id="nature">
+  <div class="photo-section-inner">
+    <div class="photo-style-title fade-up">
+      <div class="photo-style-emoji">🌸</div>
+      <div>
+        <h2>Nature</h2>
+        <span class="context">Temps libre · Passion personnelle</span>
+      </div>
+    </div>
+
+    <div class="photo-desc fade-up">
+      La photographie de nature me permet de capturer la beauté du monde végétal et des
+      paysages qui m'entourent. Des fleurs sauvages aux paysages saisonniers, chaque sortie
+      est une nouvelle découverte. Ces photos sont traitées sous <strong>Lightroom</strong>
+      pour sublimer les couleurs naturelles.
+    </div>
+
+    <div class="photo-grid">
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/Nature/Jardin.jpg" alt="Jardin" data-lightbox="assets/img/Photo/AnimalierNature/Nature/Jardin.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Abeille.jpg" alt="Abeille" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Abeille.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/AmbretteCommune2.jpg" alt="AmbretteCommune" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/AmbretteCommune2.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Bourdon.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Bourdon.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/CampanuleDesMurailles.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/CampanuleDesMurailles.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/PisteCyclable.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/PisteCyclable.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/SpiréeDentelée.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/SpiréeDentelée.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Fleur.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Fleur.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Lavande.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Lavande.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Champs2.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Champs2.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Champs3.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Champs3.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Canal.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Canal.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Canal2.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Canal2.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/CanardDeBarbarie.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/CanardDeBarbarie.jpg"></div></div>
+      <div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/Nature/Fleur1.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/Nature/Fleur1.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/Nature/Fleur2.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/Nature/Fleur2.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/AnimalierNature/Nature/Fleur3.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/AnimalierNature/Nature/Fleur3.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/AmbretteCommune.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/AmbretteCommune.jpg"></div></div>
+      <div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/BelleDame.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/BelleDame.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Champs.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Champs.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/FauconCrécerelle.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/FauconCrécerelle.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/LezardDesMurailles.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/LezardDesMurailles.jpg"></div></div>
+      <div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/LibelluleFauve.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/LibelluleFauve.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Moutarde.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Moutarde.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Plante.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Plante.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/CCRM/Espaces vertsFaune/Sauterelle.jpg" alt="Oiseaux" data-lightbox="assets/img/Photo/CCRM/Espaces vertsFaune/Sauterelle.jpg"></div></div>
+
+
+
+    </div>
+
+    <div class="floral-sep"><img src="assets/svg/tulipe.svg" alt=""></div>
+  </div>
+</section>
+
+
+
+<!-- ============================================================
+     6. Véhicules
+     ============================================================ -->
+<section class="photo-section-wrapper" id="vehicule">
+  <div class="photo-section-inner">
+    <div class="photo-style-title fade-up">
+      <div class="photo-style-emoji">🚗</div>
+      <div>
+        <h2>Véhicules</h2>
+        <span class="context">Temps libre · Expérimentation</span>
+      </div>
+    </div>
+
+    <div class="photo-desc fade-up">
+      Par curiosité et pour le plaisir <strong>d'expérimenter de nouveaux styles photographiques</strong>, 
+      il m'arrive de capturer les engins agricoles qui m'entourent ainsi que les véhicules 
+      découverts lors de visites de musées et d'expositions.
+      Vous trouverez donc dans cette section les photos que j'ai pu prendre lors de mon temps 
+      libre, que ça soit dans les <strong>champs du Sundgau</strong>, ou bien dans des musées tels que <strong>La Grange 
+      à Bécane de Bantzenheim</strong>.
+    </div>
+
+    <div class="photo-grid">
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moto/Moto (1).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moto/Moto (1).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moto/Moto (2).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moto/Moto (2).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moto/Moto (3).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moto/Moto (3).jpg"></div></div>
+      <div></div>
+      <div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (1).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (1).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (2).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (2).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (3).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (3).jpg"></div></div>
+      <div></div>
+      <div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (4).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (4).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (5).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (5).jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (6).jpg" alt="Jardin" data-lightbox="assets/img/Photo/Engins/Moissonneuse/Moisonneuse (6).jpg"></div></div>
+    </div>
+
+        <!-- Lien Flickr récap -->
+    <div style="text-align:center; padding:32px 0 8px;" class="fade-up">
+      <p style="color:var(--texte-soft); margin-bottom:16px; font-size:0.95rem;">
+        Pour voir davantage de mes photographies :
+      </p>
+      <a href="https://www.flickr.com/photos/194704484@N08/" target="_blank" rel="noopener" class="btn btn-primary">
+        📷 Voir mon profil Flickr complet
+      </a>
+    </div>
+
+    <div class="floral-sep"><img src="assets/svg/tulipe.svg" alt=""></div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Zoom image">
+  <div class="lightbox-inner">
+    <img src="" alt="">
+    <button class="lightbox-close" aria-label="Fermer">✕</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Célia<span>.</span></div>
+  <div class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html">Contact</a>
+    <a href="assets/pdf/CV_Celia_Houbre.pdf" target="_blank">Mon CV</a>
+  </div>
+  <p>© 2026 Célia Houbre · Tous droits réservés</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

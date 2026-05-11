@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Portfolio Célia Houbre</title>
+  <meta name="description" content="Contactez Célia Houbre – mail, téléphone, réseaux sociaux. Ouverte à toute opportunité de collaboration.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* =============================================
+       STYLES SPÉCIFIQUES PAGE CONTACT
+       ============================================= */
+
+    /* Hero teinte violette douce */
+    .page-hero {
+      background: linear-gradient(160deg, white 55%, rgba(169,138,191,0.07));
+    }
+
+    /* -----------------------------------------------
+       LAYOUT PRINCIPAL
+       Deux colonnes : infos contact à gauche,
+       photo + carte visuelle à droite
+       ----------------------------------------------- */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 72px 40px 80px;
+    }
+
+    /* -----------------------------------------------
+       COLONNE GAUCHE : Texte + liens de contact
+       ----------------------------------------------- */
+
+    /* Texte d'introduction */
+    .contact-intro-text {
+      font-size: 1.05rem;
+      color: var(--texte-soft);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+
+    /* ---- Bloc direct : mail & téléphone ---- */
+    .contact-direct-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--texte);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .contact-direct-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Boutons mail et téléphone — grands, cliquables */
+    .contact-direct-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+
+    .contact-direct-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--texte);
+      border: 1.5px solid var(--border);
+      background: white;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 12px rgba(169,138,191,0.07);
+    }
+    .contact-direct-btn:hover {
+      border-color: var(--violet);
+      background: rgba(169,138,191,0.04);
+      transform: translateX(5px);
+      box-shadow: 0 6px 24px rgba(169,138,191,0.14);
+    }
+
+    .contact-direct-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+    .icon-bg-mail  { background: rgba(249,178,51,0.14); }
+    .icon-bg-phone { background: rgba(174,207,236,0.3); }
+
+    .contact-direct-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-direct-info .label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--texte-soft);
+      margin-bottom: 2px;
+    }
+    .contact-direct-info .value {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--texte);
+    }
+
+    .contact-direct-arrow {
+      margin-left: auto;
+      color: var(--violet);
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      font-size: 1.1rem;
+    }
+    .contact-direct-btn:hover .contact-direct-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    /* ---- Bloc réseaux sociaux ---- */
+    .contact-socials-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--texte);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .contact-socials-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .contact-socials-text {
+      font-size: 0.95rem;
+      color: var(--texte-soft);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .socials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+
+    .social-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--texte);
+      border: 1.5px solid var(--border);
+      background: white;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .social-card::before {
+      /* Bande colorée à gauche */
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      border-radius: 3px 0 0 3px;
+      background: var(--color-accent, var(--violet));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .social-card:hover {
+      border-color: var(--color-accent, var(--violet));
+      background: rgba(169,138,191,0.03);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(169,138,191,0.12);
+    }
+    .social-card:hover::before { opacity: 1; }
+
+    .social-card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+    .social-card .name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--texte);
+    }
+    .social-card .handle {
+      font-size: 0.78rem;
+      color: var(--texte-soft);
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
+    /* Couleurs par réseau */
+    .social-insta { --color-accent: #c13584; }
+    .social-insta .social-icon { background: rgba(193,53,132,0.1); }
+
+    .social-fb { --color-accent: #1877f2; }
+    .social-fb .social-icon { background: rgba(24,119,242,0.1); }
+
+    .social-li { --color-accent: #0a66c2; }
+    .social-li .social-icon { background: rgba(10,102,194,0.1); }
+
+    .social-flickr { --color-accent: #ff0084; }
+    .social-flickr .social-icon { background: rgba(255,0,132,0.08); }
+
+    /* ---- Bouton CV ---- */
+    .cv-cta-box {
+      background: linear-gradient(135deg, rgba(169,138,191,0.1), rgba(174,207,236,0.12));
+      border: 1.5px solid rgba(169,138,191,0.2);
+      border-radius: var(--radius-md);
+      padding: 24px 26px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .cv-cta-box .cv-icon {
+      font-size: 2.4rem;
+      flex-shrink: 0;
+    }
+    .cv-cta-box .cv-text { flex: 1; }
+    .cv-cta-box h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .cv-cta-box p {
+      font-size: 0.85rem;
+      color: var(--texte-soft);
+      margin: 0;
+    }
+
+    /* -----------------------------------------------
+       COLONNE DROITE : Photo + carte visuelle
+       ----------------------------------------------- */
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 90px; /* Reste visible au scroll sous le header */
+    }
+
+    /* Cadre photo de Célia */
+    .photo-frame {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    /* Zone photo — à remplacer par une vraie <img> */
+    .photo-placeholder-zone {
+      width: 100%;
+      aspect-ratio: 4/5; /* Portrait */
+      background: linear-gradient(155deg,
+        rgba(169,138,191,0.12) 0%,
+        rgba(174,207,236,0.18) 50%,
+        rgba(249,178,51,0.08) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Pattern décoratif derrière la photo */
+    .photo-placeholder-zone::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(169,138,191,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(174,207,236,0.2) 0%, transparent 40%);
+    }
+
+    /* SVG plante décorative dans la zone photo */
+    .photo-plant-decor {
+      position: absolute;
+      bottom: 0;
+      right: -10px;
+      width: 100px;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+    .photo-plant-decor-l {
+      position: absolute;
+      top: 0;
+      left: -10px;
+      width: 80px;
+      opacity: 0.15;
+      pointer-events: none;
+      transform: scaleX(-1);
+    }
+
+    .photo-placeholder-icon {
+      font-size: 3.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .photo-placeholder-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--texte-soft);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      line-height: 1.5;
+      max-width: 200px;
+    }
+    .photo-placeholder-sub {
+      font-size: 0.72rem;
+      color: rgba(107,88,120,0.55);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+
+    /* Instruction claire pour ajouter la photo */
+    .photo-add-hint {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.85);
+      border: 1px dashed var(--violet);
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      font-size: 0.68rem;
+      color: var(--violet);
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    /* Légende sous la photo */
+    .photo-frame-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      background: white;
+    }
+    .photo-frame-footer .name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--texte);
+      margin-bottom: 2px;
+    }
+    .photo-frame-footer .role {
+      font-size: 0.82rem;
+      color: var(--violet);
+      font-weight: 600;
+    }
+
+    /* Carte "disponibilité" */
+    .availability-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avail-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #4caf50;
+      box-shadow: 0 0 0 3px rgba(76,175,80,0.2);
+      flex-shrink: 0;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(76,175,80,0.2); }
+      50%       { box-shadow: 0 0 0 6px rgba(76,175,80,0.1); }
+    }
+
+    .avail-text strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--texte);
+      margin-bottom: 2px;
+    }
+    .avail-text span {
+      font-size: 0.8rem;
+      color: var(--texte-soft);
+    }
+
+    /* -----------------------------------------------
+       RESPONSIVE
+       ----------------------------------------------- */
+    @media (max-width: 900px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 20px 60px;
+      }
+      .contact-right {
+        position: static;
+        /* On met la photo en premier sur mobile */
+        order: -1;
+      }
+      .photo-placeholder-zone { aspect-ratio: 3/2; }
+    }
+
+    @media (max-width: 480px) {
+      .socials-grid { grid-template-columns: 1fr; }
+      .cv-cta-box { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================================================
+     HEADER
+     ====================================================== -->
+<header>
+  <div class="logo" role="button" tabindex="0">Célia<span>.</span></div>
+  <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html" class="active nav-cta">Contact</a>
+  </nav>
+</header>
+
+<!-- ======================================================
+     HERO PAGE
+     ====================================================== -->
+<div class="page-hero" role="banner">
+  <img src="assets/svg/plante2.svg" class="page-hero-decor page-hero-decor-l" alt="" aria-hidden="true">
+  <img src="assets/svg/fleur.svg"   class="page-hero-decor page-hero-decor-r"
+       style="width:130px; right:30px; bottom:0; top:auto;" alt="" aria-hidden="true">
+
+  <div class="page-hero-inner">
+    <span class="section-eyebrow">Travaillons ensemble</span>
+    <h1 style="color:var(--violet)">Me contacter</h1>
+    <p>
+      Disponible pour toute opportunité d'alternance, de stage ou de collaboration.
+      N'hésitez pas à me faire signe !
+    </p>
+  </div>
+</div>
+
+<!-- ======================================================
+     CONTENU PRINCIPAL
+     ====================================================== -->
+<main style="background: var(--jaune-pale);">
+  <div class="contact-layout">
+
+    <!-- ================================================
+         COLONNE GAUCHE
+         ================================================ -->
+    <div class="contact-left">
+
+      <!-- Texte d'introduction -->
+      <p class="contact-intro-text fade-up">
+        N'hésitez pas à me contacter par mail ou par téléphone, je reste ouverte à
+        toute opportunité de <strong>collaboration</strong>, de <strong>projet</strong>
+        ou d'<strong>échange professionnel</strong> !
+      </p>
+
+      <!-- ---- MAIL & TÉLÉPHONE ---- -->
+      <h2 class="contact-direct-title fade-up">Coordonnées</h2>
+
+      <div class="contact-direct-links">
+        <!-- Mail -->
+        <a href="mailto:celia.houbre@gmail.com" class="contact-direct-btn fade-up"
+           aria-label="Envoyer un mail à celia.houbre@gmail.com">
+          <div class="contact-direct-icon icon-bg-mail">✉️</div>
+          <div class="contact-direct-info">
+            <span class="label">Email</span>
+            <span class="value">celia.houbre@gmail.com</span>
+          </div>
+          <span class="contact-direct-arrow">→</span>
+        </a>
+
+        <!-- Téléphone -->
+        <a href="tel:+33650386229" class="contact-direct-btn fade-up"
+           aria-label="Appeler le 06 50 38 62 29">
+          <div class="contact-direct-icon icon-bg-phone">📞</div>
+          <div class="contact-direct-info">
+            <span class="label">Téléphone</span>
+            <span class="value">06 50 38 62 29</span>
+          </div>
+          <span class="contact-direct-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- ---- RÉSEAUX SOCIAUX ---- -->
+      <h2 class="contact-socials-title fade-up">Réseaux sociaux</h2>
+
+      <p class="contact-socials-text fade-up">
+        Retrouvez-moi également sur mes réseaux sociaux pour suivre mes projets !
+      </p>
+
+      <div class="socials-grid">
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/celia.hbre_pics"
+           target="_blank" rel="noopener noreferrer"
+           class="social-card social-insta fade-up"
+           aria-label="Instagram de Célia Houbre">
+          <div class="social-card-top">
+            <div class="social-icon">
+              <!-- Instagram SVG simplifié -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c13584" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="#c13584" stroke="none"/>
+              </svg>
+            </div>
+            <span class="name">Instagram</span>
+          </div>
+          <span class="handle">@celia.houbre_pics</span>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/profile.php?id=61560808246676"
+           target="_blank" rel="noopener noreferrer"
+           class="social-card social-fb fade-up"
+           aria-label="Facebook de Célia Houbre">
+          <div class="social-card-top">
+            <div class="social-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877f2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </div>
+            <span class="name">Facebook</span>
+          </div>
+          <span class="handle">Célia Houbre</span>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/c%C3%A9lia-houbre/"
+           target="_blank" rel="noopener noreferrer"
+           class="social-card social-li fade-up"
+           aria-label="LinkedIn de Célia Houbre">
+          <div class="social-card-top">
+            <div class="social-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#0a66c2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </div>
+            <span class="name">LinkedIn</span>
+          </div>
+          <span class="handle">Célia Houbre</span>
+        </a>
+
+        <!-- Flickr -->
+        <a href="https://www.flickr.com/photos/194704484@N08/"
+           target="_blank" rel="noopener noreferrer"
+           class="social-card social-flickr fade-up"
+           aria-label="Flickr de Célia Houbre">
+          <div class="social-card-top">
+            <div class="social-icon">
+              <!-- Flickr : deux cercles caractéristiques -->
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <circle cx="8" cy="12" r="5" fill="#ff0084"/>
+                <circle cx="16" cy="12" r="5" fill="#0063dc"/>
+              </svg>
+            </div>
+            <span class="name">Flickr</span>
+          </div>
+          <span class="handle">Célia Houbre</span>
+        </a>
+
+      </div><!-- /socials-grid -->
+
+      <!-- ---- CV ---- -->
+      <div class="cv-cta-box fade-up">
+        <div class="cv-icon">📄</div>
+        <div class="cv-text">
+          <h3>Mon curriculum vitæ</h3>
+          <p>Téléchargez ou consultez mon CV complet pour en savoir plus sur mon parcours.</p>
+        </div>
+        <a href="assets/pdf/CV_Celia_Houbre.pdf" target="_blank" class="btn btn-primary"
+           style="white-space:nowrap; flex-shrink:0;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/>
+          </svg>
+          Télécharger
+        </a>
+      </div>
+
+    </div><!-- /contact-left -->
+
+    <!-- ================================================
+         COLONNE DROITE : Photo + disponibilité
+         ================================================ -->
+    <div class="contact-right">
+
+      <!-- Cadre photo -->
+      <div class="photo-frame fade-up">
+
+        <!--
+          ╔══════════════════════════════════════════════════════╗
+          ║  PHOTO DE CÉLIA — COMMENT L'AJOUTER                 ║
+          ║  Remplacez la div .photo-placeholder-zone par :     ║
+          ║                                                      ║
+          ║  <img                                                ║
+          ║    src="assets/img/celia.jpg"                        ║
+          ║    alt="Photo de Célia Houbre"                       ║
+          ║    style="width:100%; aspect-ratio:4/5;              ║
+          ║           object-fit:cover; display:block;">         ║
+          ║                                                      ║
+          ║  Formats acceptés : JPG, PNG, WebP                   ║
+          ║  Ratio conseillé  : portrait 4:5 ou 3:4             ║
+          ╚══════════════════════════════════════════════════════╝
+        -->
+
+        <img                                                
+              src="assets/img/celia.jpg"                        
+              alt="Photo de Célia Houbre"                       
+              style="width:100%; aspect-ratio:4/5;              
+                     object-fit:cover; display:block;">
+          <!-- Plantes décoratives dans la zone photo -->
+          <img src="assets/svg/plante1.svg"  class="photo-plant-decor"   alt="" aria-hidden="true">
+          <img src="assets/svg/plante2.svg"  class="photo-plant-decor-l" alt="" aria-hidden="true">
+        </div>
+
+        <!-- Légende sous la photo -->
+        <div class="photo-frame-footer">
+          <div class="name">Célia Houbre</div>
+          <div class="role">Étudiante BUT MMI · Chargée de comm' en devenir</div>
+        </div>
+      </div><!-- /photo-frame -->
+
+      <!-- Carte disponibilité -->
+      <div class="availability-card fade-up">
+        <div class="avail-dot" aria-hidden="true"></div>
+        <div class="avail-text">
+          <strong>Disponible dès maintenant</strong>
+          <span>Ouverte aux opportunités d'alternance ou de stage · Master Communication</span>
+        </div>
+      </div>
+
+      <!-- Petite déco florale -->
+      <div style="text-align:center; opacity:0.25; padding: 4px 0 0;">
+        <img src="assets/svg/tulipe.svg" style="width:60px; margin:0 auto;" alt="" aria-hidden="true">
+      </div>
+
+    </div><!-- /contact-right -->
+
+  </div><!-- /contact-layout -->
+</main>
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<footer>
+  <div class="footer-logo">Célia<span>.</span></div>
+  <div class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html">Contact</a>
+    <a href="assets/pdf/CV_Celia_Houbre.pdf" target="_blank">Mon CV</a>
+  </div>
+  <p>© 2025 Célia Houbre · BUT MMI · Tous droits réservés</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

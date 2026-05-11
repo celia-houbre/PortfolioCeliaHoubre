@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphisme — Portfolio Célia Houbre</title>
+  <meta name="description" content="Projets graphiques de Célia Houbre : flyers, affiches, magazines, logos, moodboards.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ---- Styles spécifiques page Graphisme ---- */
+
+    /* Hero teinte violette */
+    .page-hero {
+      background: linear-gradient(160deg, white 55%, rgba(169,138,191,0.07));
+    }
+    .graphisme-accent { color: var(--violet); }
+
+    /* Sous-titres catégorie */
+    .subcat-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 20px;
+    }
+    .subcat-header:first-of-type { margin-top: 0; }
+
+    .subcat-badge {
+      background: rgba(169,138,191,0.12);
+      color: var(--violet);
+      padding: 4px 14px;
+      border-radius: var(--radius-xl);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .subcat-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Carte projet graphisme avec placeholder décoratif */
+    .gfx-card {
+      background: white;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .gfx-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .gfx-thumb {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, rgba(169,138,191,0.15), rgba(249,178,51,0.08));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 2.4rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Pattern décoratif sur les thumbs */
+    .gfx-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(169,138,191,0.12) 0%, transparent 60%);
+    }
+
+    .gfx-thumb .thumb-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--texte-soft);
+      opacity: 0.7;
+    }
+
+    /* Thumbs colorés par type */
+    .thumb-flyer    { background: linear-gradient(135deg, rgba(249,178,51,0.18), rgba(249,178,51,0.05)); }
+    .thumb-affiche  { background: linear-gradient(135deg, rgba(169,138,191,0.18), rgba(169,138,191,0.06)); }
+    .thumb-magazine { background: linear-gradient(135deg, rgba(174,207,236,0.22), rgba(174,207,236,0.06)); }
+    .thumb-logo     { background: linear-gradient(135deg, rgba(169,138,191,0.15), rgba(249,178,51,0.1)); }
+    .thumb-mood     { background: linear-gradient(135deg, rgba(174,207,236,0.18), rgba(249,178,51,0.08)); }
+
+    .gfx-body {
+      padding: 14px 16px;
+    }
+    .gfx-body h4 {
+      font-size: 0.95rem;
+      color: var(--texte);
+      margin-bottom: 3px;
+    }
+    .gfx-body small {
+      font-size: 0.78rem;
+      color: var(--texte-soft);
+    }
+
+    /* Note "à compléter" */
+    .todo-note {
+      background: rgba(249,178,51,0.08);
+      border: 1px dashed rgba(249,178,51,0.5);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: #9a7020;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Grille PDF communiqués */
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* Bloc fake news avec viewer PDF */
+    .fakenews-block {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .fakenews-header {
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .fakenews-header .eyebrow {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--violet);
+      display: block; margin-bottom: 10px;
+    }
+    .fakenews-header h3 { margin-bottom: 8px; }
+    .fakenews-header p { color: var(--texte-soft); font-size: 0.9rem; }
+
+    .pdf-viewer-container {
+      position: relative;
+      background: #f8f5fe;
+    }
+
+    /* Frame PDF responsive */
+    .pdf-frame-wrapper {
+      width: 100%;
+      padding-bottom: 133%; /* ratio portrait A4 */
+      position: relative;
+      background: #eee;
+    }
+    .pdf-frame-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .pdf-viewer-footer {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      background: white;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .pdf-viewer-footer p { font-size: 0.85rem; color: var(--texte-soft); flex: 1; }
+
+    /* Slider spécial newsletter – images full */
+    .nl-slider {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .nl-slider .slider-track .slide img {
+      width: 100%;
+      max-height: 700px;
+      object-fit: contain;
+      background: #faf8fe;
+    }
+
+    .photo-section-wrapper {
+      background: var(--jaune-pale);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Alternance de fond pour aérer */
+    .photo-section-wrapper:nth-child(even) {
+      background: white;
+    }
+
+    .photo-section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+
+    /* Titre du style photo */
+    .photo-style-title {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .photo-style-emoji {
+      font-size: 2.8rem;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .photo-style-title h2 {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    .photo-style-title .context {
+      display: inline-block;
+      background: rgba(174,207,236,0.25);
+      color: #4a7fa5;
+      padding: 2px 12px;
+      border-radius: var(--radius-xl);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Texte descriptif style photo */
+    .photo-desc {
+      background: rgba(174,207,236,0.1);
+      border-left: 3px solid var(--bleu);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      color: var(--texte-soft);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .photo-desc a {
+      color: var(--violet);
+      text-decoration: underline;
+    }
+    .photo-desc strong { color: var(--texte); }
+
+    /* Grille de photos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 10px;
+    }
+
+    /* Placeholder photo (à remplacer par de vraies photos) */
+    .photo-item {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .photo-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+    .photo-item:hover .photo-item-overlay { opacity: 1; }
+
+    .photo-item-thumb {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, rgba(174,207,236,0.25), rgba(169,138,191,0.15));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      gap: 6px;
+      border: 1px solid rgba(174,207,236,0.3);
+    }
+
+    /* Variantes de fond par style */
+    .bg-animalier { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+    .bg-batiments { background: linear-gradient(135deg, rgba(174,207,236,0.3), rgba(174,207,236,0.1)); }
+    .bg-ecomusee  { background: linear-gradient(135deg, #e8f5e9, rgba(174,207,236,0.2)); }
+    .bg-nature    { background: linear-gradient(135deg, #f0f4e0, #dce8c0); }
+    .bg-culinaire { background: linear-gradient(135deg, rgba(249,178,51,0.2), rgba(249,178,51,0.06)); }
+
+    .photo-item-thumb small {
+      font-size: 0.68rem;
+      color: var(--texte-soft);
+      text-align: center;
+      padding: 0 8px;
+      font-family: var(--font-body);
+    }
+
+    .photo-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(169,138,191,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      backdrop-filter: blur(2px);
+    }
+    .photo-item-overlay span {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--violet);
+    }
+
+    /* Lien Flickr */
+    .flickr-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(174,207,236,0.2);
+      border: 1px solid var(--bleu);
+      color: #2a6fa8;
+      padding: 8px 18px;
+      border-radius: var(--radius-xl);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: all 0.2s ease;
+    }
+    .flickr-link:hover {
+      background: rgba(174,207,236,0.35);
+      transform: translateY(-2px);
+    }
+
+    /* Séparateur floral */
+    .floral-sep {
+      text-align: center;
+      padding: 24px 0 0;
+      opacity: 0.3;
+    }
+    .floral-sep img { width: 50px; margin: 0 auto; }
+
+    @media (max-width: 768px) {
+      .photo-section-inner { padding: 40px 20px; }
+      .photo-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .photo-style-title { grid-template-columns: 1fr; gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .graphisme-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo" role="button" tabindex="0">Célia<span>.</span></div>
+  <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html" class="active">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO PAGE -->
+<div class="page-hero" role="banner">
+  <img src="assets/svg/plante2.svg" class="page-hero-decor page-hero-decor-l" alt="" aria-hidden="true">
+  <img src="assets/svg/fleur.svg"   class="page-hero-decor page-hero-decor-r" alt="" aria-hidden="true" style="width:140px; right:20px; bottom:0; top:auto;">
+
+  <div class="page-hero-inner">
+    <span class="section-eyebrow">Projets</span>
+    <h1 class="graphisme-accent">Graphisme</h1>
+    <p>
+      Flyers, affiches, logos, moodboards, motifs…
+      Mes créations visuelles réalisées lors de mes études et pour des projets personnels.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION PRINCIPALE – GRAPHISME
+     Classée par type : Flyers · Affiches · Magazines · Logos · Moodboards
+     ============================================================ -->
+<main class="projects-section">
+  <div class="section-inner">
+
+    <!-- Intro -->
+    <div class="intro-block fade-up">
+      <p>
+        Cette page regroupe mes créations graphiques réalisées dans différents contextes :
+        projets universitaires, stages, et productions personnelles.
+        Chaque projet reflète une approche <strong>soignée de l'identité visuelle</strong> et de la mise en page.
+        Les visuels sont à ajouter directement dans les dossiers correspondants.
+      </p>
+    </div>
+<!-- ============================================================
+     SECTION PRINCIPALE – GRAPHISME
+     ============================================================ -->
+<main class="projects-section">
+  <div class="section-inner">
+
+    <!-- ==================================================
+         1. Flyer
+         Cartes PDF avec visualisation et téléchargement
+         ================================================== -->
+    <div class="category-block fade-up" id="communiques">
+      <div class="category-title">
+        <div class="category-icon">📋</div>
+        <div>
+          <h2>Flyer</h2>
+          <span class="cat-count">1 dépliant</span>
+        </div>
+      </div>
+
+      <div class="intro-block">
+        <p>
+          Durant mon stage chez <strong><em>Sandro Matera</em></strong>, j'ai eu la belle opportunité 
+          de concevoir entièrement un flyer pour <strong> la Maison des Adolescents du Haut-Rhin</strong>. 
+          J'ai dû entièrement gérer, planifier et réaliser ce projet en prenant rendez-vous 
+          avec le client, et en effectuant des échanges réguliers avec celui-ci. J'ai dû chercher 
+          à rendre le flyer moderne, attractif, et dynamique tout en me soumettant aux diverses 
+          contraintes et demandes du client. En voici le résultat final :
+        </p>
+      </div>
+
+      <!-- Slider newsletter -->
+      <div class="nl-slider newsletter-slider" aria-label="Éditions de la newsletter CtrlS">
+        <div class="slider-track">
+          <div class="slide">
+            <img src="assets/img/Flyer_MDA68_Page_1.jpg" alt="Flyer MDA 68 Page 1" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/Flyer_MDA68_Page_2.jpg" alt="Flyer MDA 68 Page 2" loading="lazy">
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn prev" aria-label="Édition précédente">&#8592;</button>
+          <div class="slider-dots">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+          </div>
+          <button class="slider-btn next" aria-label="Édition suivante">&#8594;</button>
+        </div>
+      </div>
+    </div><!-- /newsletter -->
+
+    <!-- Séparateur décoratif -->
+    <div style="height:48px; display:flex; align-items:center; justify-content:center; margin: 8px 0">
+      <img src="assets/svg/fleur.svg" style="width:48px; opacity:0.35" alt="" aria-hidden="true">
+    </div>
+
+
+
+<!-- ==================================================
+         2. Coffee
+         Cartes PDF avec visualisation et téléchargement
+         ================================================== -->
+    <div class="category-block fade-up" id="communiques">
+      <div class="category-title">
+        <div class="category-icon">📋</div>
+        <div>
+          <h2>Logo</h2>
+          <span class="cat-count">1 Logo</span>
+        </div>
+      </div>
+
+      <div class="intro-block">
+        <p>
+          Dans le cadre d'un projet universitaire, j'ai dû imaginer la refonte 
+          d'un vieux bâtiment abandonné à Guebwiller. J'ai pensé alors redonner 
+          vie à ce bâtiment en le transformant en <strong>café floral</strong>. Par la suite, j'ai 
+          dû trouver un nom pour cet établissement, lui créer un logo, et constituer 
+          tout un <strong>dossier de recherche graphique</strong>. Je vous présente alors le résultat 
+          de ce dossier de recherche avec le logo de Coffea, ainsi que ses déclinaisons 
+          sur divers supports.
+        </p>
+      </div>
+
+      <!-- Slider newsletter -->
+      <div class="nl-slider newsletter-slider" aria-label="Éditions de la newsletter CtrlS">
+        <div class="slider-track">
+          <div class="slide">
+            <svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297.8 158.12">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3d2b1f;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: #e9d017;
+      }
+    </style>
+  </defs>
+  <g id="Logo">
+    <g id="Logo-2" data-name="Logo">
+      <g>
+        <rect class="cls-1" width="297.8" height="158.12"/>
+        <g>
+          <path class="cls-3" d="M30.57,67.22c0-15.82,10.91-27.2,26.09-27.2,12.65,0,21.59,7.99,20.88,18.42l-2.69-.08c.63-9.01-7.67-15.82-18.5-15.82-13.05,0-23.09,10.04-23.09,24.51,0,15.74,11.78,26.65,27.6,26.65,8.22,0,17.24-2.85,24.2-8.46l1.34,2.13c-7.12,5.85-16.76,8.94-25.7,8.94-17.16,0-30.13-11.86-30.13-29.1Z"/>
+          <path class="cls-3" d="M224.06,87.94c-5.93,5.54-14.31,8.38-22.46,8.38-12.65,0-24.51-7.04-24.51-21.67,0-13.52,10.36-20.56,19.77-20.56,7.35,0,14.31,4.27,14.31,12.57,0,10.44-10.75,15.02-23.17,15.02-2.37,0-4.74-.16-7.12-.47,3,8.46,11.7,12.49,20.88,12.49,7.43,0,15.34-2.61,20.72-7.67l1.58,1.9ZM179.77,74.49c0,1.5.16,2.93.4,4.27,2.53.4,5.06.63,7.59.63,10.83,0,20.72-3.95,20.72-12.65,0-6.72-5.77-10.12-11.7-10.12-7.75,0-17,5.85-17,17.87Z"/>
+          <path class="cls-3" d="M275.85,87.86c-3.4,5.46-8.54,8.46-13.2,8.46-4.27,0-7.83-2.69-8.46-8.14-3.48,4.9-9.41,8.14-16.37,8.14-11.23,0-19.53-8.62-19.53-21.11s8.22-21.11,19.61-21.11c6.72,0,12.73,2.93,16.29,7.43l-.08-6.96h2.61v31.39c0,5.3,2.77,7.83,6.33,7.83s8.07-2.69,10.91-7.51l1.9,1.58ZM254.1,84.69v-19.77c-3.4-5.22-9.49-8.3-15.89-8.3-10.12,0-17.24,7.59-17.24,18.58s7.27,18.58,17.24,18.58c6.96,0,12.97-3.56,15.89-9.09Z"/>
+          <g>
+            <path class="cls-3" d="M132.17,55.35v35.98c4.51,1.66,8.22,2.53,11.23,2.53,5.54,0,9.17-2.77,12.02-7.59l1.98,1.58c-3.4,5.22-7.51,8.46-14,8.46-3.08,0-6.8-.79-11.23-2.37v17.4h-2.61v-55.99"/>
+            <path class="cls-3" d="M157.63,54.17v17.59c0,.63.51,1.15,1.15,1.15h8.54c.63,0,1.15.51,1.15,1.15h0c0,.63-.51,1.15-1.15,1.15h-8.54c-.63,0-1.15.51-1.15,1.15v14.18c0,.48.31.92.76,1.08,4.17,1.48,7.63,2.25,10.47,2.25,5.11,0,8.61-2.36,11.35-6.53.37-.56,1.14-.68,1.67-.26l.15.12c.48.38.57,1.07.22,1.56-3.28,4.69-7.28,7.56-13.39,7.56-2.73,0-5.95-.62-9.72-1.86-.74-.24-1.5.31-1.5,1.09v14.65c0,.63-.51,1.15-1.15,1.15h-.32c-.63,0-1.15-.51-1.15-1.15v-33.84c0-.63-.51-1.15-1.15-1.15h-21.34c-.63,0-1.15-.51-1.15-1.15h0c0-.63.51-1.15,1.15-1.15h21.34c.63,0,1.15-.51,1.15-1.15v-17.75"/>
+            <path class="cls-3" d="M154.93,55.35c0-12.65,8.22-21.11,19.61-21.11,6.72,0,12.73,2.93,16.29,7.43l-.08,3.4c-3.4-5.22-9.49-8.3-15.89-8.3-10.12,0-17.24,7.59-17.24,18.58h-2.69Z"/>
+            <path class="cls-3" d="M159.86,36.97c-3.09-1.72-6.76-2.72-10.69-2.72-11.39,0-19.61,8.46-19.61,21.11h2.61c0-10.99,7.2-18.58,17.32-18.58,2.93,0,5.79.65,8.36,1.85.63-.6,1.3-1.15,2.01-1.66Z"/>
+          </g>
+        </g>
+        <g>
+          <g id="pÃ©tales">
+            <path class="cls-2" d="M110.3,77.43s7.58-1.67,13.5,19.41c0,0-.99,1.03.89,5.72,0,0-8.06.98-11.89-5.27,0,0-4.4-7.06-5.13-10.83,0,0-.13-4.37-1.99-5.82l4.62-3.21Z"/>
+            <path class="cls-2" d="M102.67,81.15s5.24,5.73-10.06,21.4c0,0-1.39-.34-4.51,3.63,0,0-4.88-6.49-1.38-12.94,0,0,3.91-7.34,6.81-9.86,0,0,3.72-2.29,4.04-4.63l5.09,2.39Z"/>
+            <path class="cls-2" d="M95.64,76.39s-2.34,7.4-23.56,1.99c0,0-.4-1.38-5.4-2.09,0,0,3.18-7.47,10.51-7.67,0,0,8.31-.28,11.95.97,0,0,3.85,2.08,6.03,1.19l.47,5.61Z"/>
+            <path class="cls-2" d="M96.24,67.93s-7.58,1.67-13.5-19.41c0,0,.99-1.03-.89-5.72,0,0,8.06-.98,11.89,5.27,0,0,4.4,7.06,5.13,10.83,0,0,.13,4.37,1.99,5.82l-4.62,3.21Z"/>
+            <path class="cls-2" d="M103.87,64.22s-5.24-5.73,10.06-21.4c0,0,1.39.34,4.51-3.63,0,0,4.88,6.49,1.38,12.94,0,0-3.91,7.34-6.81,9.86,0,0-3.72,2.29-4.04,4.63l-5.09-2.39Z"/>
+            <path class="cls-2" d="M110.9,68.97s2.34-7.4,23.56-1.99c0,0,.4,1.38,5.4,2.09,0,0-3.18,7.47-10.51,7.67,0,0-8.31.28-11.95-.97,0,0-3.85-2.08-6.03-1.19l-.47-5.61Z"/>
+          </g>
+          <g id="pistil">
+            <path class="cls-3" d="M106.15,90.5s-4.91-1.37-1.88-8.48c0,0,1.42-3.37-.79-6.82,0,0,4.03,2.38,2.38,8.5,0,0-2.07,5.58.29,6.8Z"/>
+            <path class="cls-3" d="M89.27,84.09s-1.27-4.93,6.4-5.87c0,0,3.63-.45,5.51-4.1,0,0-.05,4.68-6.17,6.31,0,0-5.87,1-5.74,3.65Z"/>
+            <path class="cls-3" d="M86.39,66.27s3.64-3.57,8.28,2.61c0,0,2.21,2.92,6.3,2.72,0,0-4.08,2.3-8.55-2.18,0,0-3.8-4.58-6.03-3.15Z"/>
+            <path class="cls-3" d="M100.39,54.86s4.91,1.37,1.88,8.48c0,0-1.42,3.37.79,6.82,0,0-4.03-2.38-2.38-8.5,0,0,2.07-5.58-.29-6.8Z"/>
+            <path class="cls-3" d="M117.26,61.27s1.27,4.93-6.4,5.87c0,0-3.63.45-5.51,4.1,0,0,.05-4.68,6.17-6.31,0,0,5.87-1,5.74-3.65Z"/>
+            <path class="cls-3" d="M120.14,79.1s-3.64,3.57-8.28-2.61c0,0-2.21-2.92-6.3-2.72,0,0,4.08-2.3,8.55,2.18,0,0,3.8,4.58,6.03,3.15Z"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
+          </div>
+          <div class="slide">
+            <img src="assets/img/mockupVisite.png" alt="Coffea 2" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/img/mockup favicon.png" alt="Coffea 3" loading="lazy">
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn prev" aria-label="Édition précédente">&#8592;</button>
+          <div class="slider-dots">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+          </div>
+          <button class="slider-btn next" aria-label="Édition suivante">&#8594;</button>
+        </div>
+      </div>
+    </div><!-- /Coffea -->
+
+    <!-- Séparateur décoratif -->
+    <div style="height:48px; display:flex; align-items:center; justify-content:center; margin: 8px 0">
+      <img src="assets/svg/fleur.svg" style="width:48px; opacity:0.35" alt="" aria-hidden="true">
+    </div>
+
+
+
+<!-- ==================================================
+         3. Moodboard
+         Cartes PDF avec visualisation et téléchargement
+         ================================================== -->
+    <div class="category-block fade-up" id="communiques">
+      <div class="category-title">
+        <div class="category-icon">🎨</div>
+        <div>
+          <h2>Moodboard</h2>
+          <span class="cat-count">3 documents</span>
+        </div>
+      </div>
+
+      <div class="intro-block">
+        <p>
+          Lors de mon stage chez <em><strong>Sandro Matera</strong></em>, j'ai été amenée à effectuer 
+          de nombreux Moodboards pour soumettre diverses idées d'ambiances à 
+          divers clients selon les projets. J'ai été amenée à proposer des ambiances 
+          pour la carte du restaurant L'Imprimerie, pour le magazine Résoado de la Maison 
+          des Adolescents du Haut-Rhin, et pour un certificat de diplôme de Skando.
+        </p>
+      </div>
+
+      <div class="pdf-grid">
+        <!-- Moodboard MDA -->
+        <div class="pdf-card fade-up">
+          <div class="pdf-icon">📄</div>
+          <div class="pdf-info">
+            <h3>Moodboard MDA 68</h3>
+            <p>Moodboard pour la Maison des Adolescents</p>
+            <div class="pdf-actions">
+              <a href="assets/pdf/MOODBOARD - MDA PROJECT.pdf" target="_blank" class="btn-sm btn-sm-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Ouvrir
+              </a>
+              <a href="assets/pdf/MOODBOARD - MDA PROJECT.pdf" download class="btn-sm btn-sm-secondary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+                Télécharger
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- L'imprimerie -->
+        <div class="pdf-card fade-up">
+          <div class="pdf-icon">📄</div>
+          <div class="pdf-info">
+            <h3>Moodboard L'imprimerie</h3>
+            <p>Moodboard pour le restaurant L'imprimerie</p>
+            <div class="pdf-actions">
+              <a href="assets/pdf/Moodboard L'Imprimerie.pdf" target="_blank" class="btn-sm btn-sm-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Ouvrir
+              </a>
+              <a href="assets/pdf/Moodboard L'Imprimerie.pdf" download class="btn-sm btn-sm-secondary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+                Télécharger
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skando -->
+        <div class="pdf-card fade-up">
+          <div class="pdf-icon">🚨</div>
+          <div class="pdf-info">
+            <h3>Moodboard Skando</h3>
+            <p>Moodboard pour un certificat de diplôme Skando</p>
+            <div class="pdf-actions">
+              <!-- Ce fichier est une image JPG -->
+              <a href="assets/img/Moodboard Skando.png" target="_blank" class="btn-sm btn-sm-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Voir
+              </a>
+              <a href="assets/img/Moodboard Skando.png" download class="btn-sm btn-sm-secondary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+                Télécharger
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aperçu image communiqué de crise -->
+      <div style="margin-top:24px; background:white; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);" class="fade-up">
+        <img src="assets/img/Moodboard L'Imprimerie_Page_1.jpg" alt="Communiqué Ctrl s" style="width:100%; max-height:480px; object-fit:contain; object-position:top; background:#f8f5fe; display:block;" loading="lazy" data-lightbox="assets/img/Moodboard L'Imprimerie_Page_1.jpg">
+        <p style="padding:12px 16px; font-size:0.8rem; color:var(--texte-soft); background:white; border-top:1px solid var(--border);">
+          Moodboard L'imprimerie <span style="opacity:0.5">· Cliquer pour agrandir</span>
+        </p>
+      </div>
+    </div><!-- /communiques -->
+
+    <!-- Séparateur -->
+    <div style="height:48px; display:flex; align-items:center; justify-content:center; margin:8px 0">
+      <img src="assets/svg/tulipe.svg" style="width:40px; opacity:0.3" alt="" aria-hidden="true">
+    </div>
+
+
+
+<!-- ============================================================
+     4. Motifs
+     ============================================================ -->
+<section class="photo-section-wrapper" id="animalier">
+  <div class="photo-section-inner">
+    <div class="photo-style-title fade-up">
+      <div class="photo-style-emoji">🍂</div>
+      <div>
+        <h2>Motifs</h2>
+        <span class="context">Musée d'impression sur Étoffe</span>
+      </div>
+    </div>
+
+    <div class="photo-desc fade-up">
+      Lors d'un projet universitaire, nous devions créer un motif 
+      sur le thème de notre choix dans le but de redonner vie au <em><strong>MISE 
+      (Musée d'Impression Sur Étoffe à Mulhouse)</strong></em>. Pour ma part, j'ai 
+      choisi le thème de l'automne qui m'inspire toujours beaucoup. 
+      J'ai donc créer divers motifs, et les ai appliqué sur divers supports.
+    </div>
+
+    <!-- Grille de placeholders — à remplacer par de vraies photos -->
+    <div class="photo-grid">
+      <!-- Placeholders. Pour ajouter vos photos: <div class="photo-item"><img src="assets/img/votre_photo.jpg" alt="Description" data-lightbox="assets/img/votre_photo.jpg"></div> -->
+       <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/HOUBRE_103_Mock Up_Mode1.jpg" alt="Mockup 1" data-lightbox="assets/img/HOUBRE_103_Mock Up_Mode1.jpg"></div></div>
+      <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/HOUBRE_103_Mock Up_Mode2.jpg" alt="Mockup2" data-lightbox="assets/img/HOUBRE_103_Mock Up_Mode2.jpg"></div></div>
+       <div></div>
+       <div></div>
+       <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Fichier 5.png" alt="Motif1" data-lightbox="assets/img/Fichier 5.png"></div></div>
+       <div class="photo-item fade-up"><div class="photo-item"><img src="assets/img/Fichier 6.png" alt="Motif2" data-lightbox="assets/img/Fichier 6.png"></div></div>
+    </div>
+
+    <div class="floral-sep"><img src="assets/svg/fleur.svg" alt=""></div>
+  </div>
+</section>
+
+
+
+
+<!-- ==================================================
+         5. Affiche
+         ================================================== -->
+    <div class="category-block fade-up" id="communiques">
+      <div class="category-title">
+        <div class="category-icon">📋</div>
+        <div>
+          <h2>Affiche</h2>
+          <span class="cat-count">2 affiche</span>
+        </div>
+      </div>
+
+      <div class="intro-block">
+        <p>
+          Et voici pour finir quelques <strong>affiches</strong> que j'ai pu réaliser au cours 
+          de ma formation en BUT MMI. Entre affiche tout aussi mystique qu'extravagante 
+          pour le Festival fictif de musique <em><strong>Fantastika</strong></em>, et affiche épurée et monochrome 
+          pour une fausse diffusion du film en stop-motion <em><strong>Fantastic Mr. Fox</strong></em>, ces créations 
+          mettent en avant deux approches graphiques aux ambiances <strong>totalement opposées</strong>.
+        </p>
+      </div>
+
+      <div style="margin-top:24px; background:white; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);" class="fade-up">
+        <img src="assets/img/Fox.png" alt="Affiche Fantastika" style="width:100%; max-height:480px; object-fit:contain; object-position:top; background:#f8f5fe; display:block;" loading="lazy" data-lightbox="assets/img/fox.png">
+        <p style="padding:12px 16px; font-size:0.8rem; color:var(--texte-soft); background:white; border-top:1px solid var(--border);">
+          Affiche - Fantastic Mr . Fox <span style="opacity:0.5">· Cliquer pour agrandir</span>
+        </p>
+      </div>
+
+    <!-- Aperçu image communiqué de crise -->
+      <div style="margin-top:24px; background:white; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border);" class="fade-up">
+        <img src="assets/img/Affiche Fantastikaka.jpg" alt="Affiche Fantastika" style="width:100%; max-height:480px; object-fit:contain; object-position:top; background:#f8f5fe; display:block;" loading="lazy" data-lightbox="assets/img/Affiche Fantastikaka.jpg">
+        <p style="padding:12px 16px; font-size:0.8rem; color:var(--texte-soft); background:white; border-top:1px solid var(--border);">
+          Affiche - Fantastika <span style="opacity:0.5">· Cliquer pour agrandir</span>
+        </p>
+      </div>
+    </div><!-- /affiche -->
+
+
+  </div><!-- /section-inner -->
+</div>
+</main>
+
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Zoom image">
+  <div class="lightbox-inner">
+    <img src="" alt="">
+    <button class="lightbox-close" aria-label="Fermer">✕</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Célia<span>.</span></div>
+  <div class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="comm.html">Communication</a>
+    <a href="graphisme.html">Graphisme</a>
+    <a href="photo.html">Photo</a>
+    <a href="contact.html">Contact</a>
+    <a href="assets/pdf/CV_Celia_Houbre.pdf" target="_blank">Mon CV</a>
+  </div>
+  <p>© 2026 Célia Houbre · Tous droits réservés</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
